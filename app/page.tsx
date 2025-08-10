@@ -13,7 +13,7 @@ export default function Page() {
         {/* Left: image with copy overlay */}
         <div className="relative aspect-[4/5] md:aspect-auto bg-black/20 ring-1 ring-white/10">
           <Image
-            src="https://www.purplerain.tech/device-mockup.png"
+            src="https://images.unsplash.com/photo-1626908013351-800ddd734b8a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y3liZXJzZWN1cml0eXxlbnwwfHwwfHx8MA%3D%3D"
             alt="Cybersecurity infrastructure"
             fill
             priority
