@@ -1,4 +1,4 @@
-# PurpleRain Login (Next.js)
+# PurpleRain Login (Next.js)..
 
 Standalone Next.js app focused on a polished, PurpleRain-themed login/signup UI inspired by the provided mock.
 
