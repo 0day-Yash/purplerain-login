@@ -20,7 +20,7 @@ export default function Page() {
           <div className="absolute inset-x-6 bottom-6 text-zinc-100">
             <p className="text-sm/6 text-zinc-200/80">PurpleRain TechSafe</p>
             <h2 className="mt-2 text-xl font-semibold md:text-2xl">Secure your future, one safeguard at a time.</h2>
-            <p className="mt-1 text-sm text-zinc-300/80">Join a community protecting tomorrow's infrastructure today.</p>
+            <p className="mt-1 text-sm text-zinc-300/80">Join a community protecting tomorrow&apos;s infrastructure today.</p>
           </div>
         </div>
 
