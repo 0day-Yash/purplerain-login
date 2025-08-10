@@ -1,0 +1,25 @@
+{
+  "name": "purplerain-login",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.2.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.12",
+    "@types/react": "19.1.9",
+    "eslint": "^8",
+    "eslint-config-next": "15.2.4",
+    "postcss": "^8",
+    "tailwindcss": "^4.0.12",
+    "typescript": "^5.5.0"
+  }
+}

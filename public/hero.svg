@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(250,20%,85%)"/>
+      <stop offset="1" stop-color="hsl(120,25%,45%)"/>
+    </linearGradient>
+    <linearGradient id="d" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="rgba(0,0,0,0.7)"/>
+      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#g)"/>
+  <g opacity="0.55" stroke="hsl(250,12%,20%)" stroke-width="10">
+    <path d="M0,700 L850,0 L1200,0 L350,700 Z" fill="hsl(250,12%,10%)"/>
+    <path d="M350,700 L1200,0 L1200,420 L640,900 Z" fill="hsl(250,12%,8%)"/>
+    <path d="M0,700 L350,700 L640,900 L0,900 Z" fill="hsl(250,12%,6%)"/>
+    <g stroke="hsl(250,8%,45%)" stroke-width="6">
+      <line x1="90" y1="740" x2="610" y2="740"/>
+      <line x1="90" y1="770" x2="630" y2="770"/>
+      <line x1="90" y1="800" x2="650" y2="800"/>
+      <line x1="90" y1="830" x2="670" y2="830"/>
+      <line x1="90" y1="860" x2="690" y2="860"/>
+    </g>
+  </g>
+  <rect x="0" y="1150" width="1200" height="350" fill="url(#d)"/>
+</svg>
