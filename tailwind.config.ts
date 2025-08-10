@@ -18,9 +18,11 @@ export default {
         }
       },
       borderRadius: {
-        lg: '10px',
-        xl: '14px',
-        '2xl': '18px'
+        sm: '4px',
+        md: '6px',
+        lg: '8px',
+        xl: '10px',
+        '2xl': '12px'
       },
       boxShadow: {
         card: '0 20px 40px rgba(0,0,0,.35)',
