@@ -4,6 +4,7 @@ const nextConfig = {
     unoptimized: false,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'www.purplerain.tech' },
     ],
   },
 };
