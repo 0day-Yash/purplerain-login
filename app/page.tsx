@@ -8,7 +8,20 @@ export default function Page() {
   const [isSignUp, setIsSignUp] = useState(true)
 
   return (
-    <main className="min-h-dvh grid place-items-center p-4">
+    <main className="min-h-dvh grid place-items-center p-4 bg-gradient-to-br from-[color:var(--pr-bg)] via-slate-900 to-violet-950 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float animate-glow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-violet-400/15 rounded-full blur-3xl animate-float animate-glow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-3/4 left-1/2 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-float animate-glow" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl animate-float animate-glow" style={{ animationDelay: '1s' }}></div>
+      </div>
+
+      {/* Subtle grid pattern overlay */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
+        backgroundSize: '50px 50px'
+      }}></div>
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-0 rounded-xl overflow-hidden glass-surface ring-1 ring-white/10 shadow-card">
         {/* Left: image with copy overlay */}
         <div className="relative aspect-[4/5] md:aspect-auto bg-black/20 ring-1 ring-white/10">
