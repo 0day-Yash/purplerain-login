@@ -27,6 +27,6 @@ export default {
       }
     }
   },
-  darkMode: ['class'],
+  darkMode: 'class',
 } satisfies Config
 
