@@ -70,14 +70,14 @@ export default function Page() {
           setError('Invalid email or password')
         }
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleSocialLogin = (provider) => {
+  const handleSocialLogin = () => {
     // For demo purposes, redirect to client dashboard
     window.location.href = 'https://client-purplerain.vercel.app/'
   }
@@ -187,7 +187,7 @@ export default function Page() {
             {/* Social login buttons */}
             <div className="mt-6 space-y-3">
               <button 
-                onClick={() => handleSocialLogin('google')}
+                onClick={() => handleSocialLogin()}
                 className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ export default function Page() {
               </button>
 
               <button 
-                onClick={() => handleSocialLogin('apple')}
+                onClick={() => handleSocialLogin()}
                 className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
