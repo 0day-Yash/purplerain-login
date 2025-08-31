@@ -4,8 +4,83 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
+// Hardcoded credentials for testing
+const TEST_CREDENTIALS = {
+  client: {
+    email: 'client@test.com',
+    password: 'client123'
+  },
+  employee: {
+    email: 'employee@test.com',
+    password: 'employee123'
+  }
+}
+
 export default function Page() {
-  const [isSignUp, setIsSignUp] = useState(true)
+  const [isSignUp, setIsSignUp] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    try {
+      if (isSignUp) {
+        // Sign up logic
+        if (password !== confirmPassword) {
+          setError('Passwords do not match')
+          setIsLoading(false)
+          return
+        }
+        
+        if (password.length < 6) {
+          setError('Password must be at least 6 characters')
+          setIsLoading(false)
+          return
+        }
+
+        if (!fullName.trim()) {
+          setError('Full name is required')
+          setIsLoading(false)
+          return
+        }
+
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        // For demo, redirect to client dashboard after signup
+        window.location.href = 'https://client-purplerain.vercel.app/'
+      } else {
+        // Sign in logic
+        if (email === TEST_CREDENTIALS.client.email && password === TEST_CREDENTIALS.client.password) {
+          // Redirect to client dashboard
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          window.location.href = 'https://client-purplerain.vercel.app/'
+        } else if (email === TEST_CREDENTIALS.employee.email && password === TEST_CREDENTIALS.employee.password) {
+          // Redirect to employee dashboard
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          window.location.href = 'http://employee-purplerain.vercel.app/'
+        } else {
+          setError('Invalid email or password')
+        }
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSocialLogin = (provider) => {
+    // For demo purposes, redirect to client dashboard
+    window.location.href = 'https://client-purplerain.vercel.app/'
+  }
 
   return (
     <main className="min-h-dvh grid place-items-center p-4 bg-gradient-to-br from-[color:var(--pr-bg)] via-slate-900 to-violet-950 relative overflow-hidden">
@@ -22,6 +97,7 @@ export default function Page() {
         backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
         backgroundSize: '50px 50px'
       }}></div>
+
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-0 rounded-xl overflow-hidden glass-surface ring-1 ring-white/10 shadow-card">
         {/* Left: image with copy overlay */}
         <div className="relative aspect-[4/5] md:aspect-auto bg-black/20 ring-1 ring-white/10">
@@ -36,8 +112,25 @@ export default function Page() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent" />
           <div className="absolute inset-x-6 bottom-6 text-zinc-100">
             <p className="text-sm/6 text-zinc-200/80">PurpleRain TechSafe</p>
-            <h2 className="mt-2 text-xl font-semibold md:text-2xl">Secure your future, one safeguard at a time.</h2>
-            <p className="mt-1 text-sm text-zinc-300/80">Join a community protecting tomorrow&apos;s infrastructure today.</p>
+            <h2 className="mt-2 text-xl font-semibold md:text-2xl">
+              Secure your future, one safeguard at a time.
+            </h2>
+            <p className="mt-1 text-sm text-zinc-300/80">
+              Join a community protecting tomorrow&apos;s infrastructure today.
+            </p>
+            
+            {/* Test credentials info */}
+            <div className="mt-6 p-3 bg-black/30 rounded-lg border border-white/20">
+              <p className="text-xs text-zinc-300 font-semibold mb-2">Test Credentials:</p>
+              <div className="space-y-1 text-xs text-zinc-400">
+                <div>
+                  <span className="text-violet-300">Client:</span> client@test.com / client123
+                </div>
+                <div>
+                  <span className="text-blue-300">Employee:</span> employee@test.com / employee123
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -47,7 +140,10 @@ export default function Page() {
             {/* Toggle buttons */}
             <div className="flex rounded-md bg-black/20 p-1 mb-6">
               <button
-                onClick={() => setIsSignUp(true)}
+                onClick={() => {
+                  setIsSignUp(true)
+                  setError('')
+                }}
                 className={`flex-1 rounded-sm px-3 py-2 text-sm font-medium transition-all ${
                   isSignUp
                     ? 'bg-[color:var(--pr-primary)] text-[color:var(--pr-bg)] shadow-sm'
@@ -57,7 +153,10 @@ export default function Page() {
                 Sign Up
               </button>
               <button
-                onClick={() => setIsSignUp(false)}
+                onClick={() => {
+                  setIsSignUp(false)
+                  setError('')
+                }}
                 className={`flex-1 rounded-sm px-3 py-2 text-sm font-medium transition-all ${
                   !isSignUp
                     ? 'bg-[color:var(--pr-primary)] text-[color:var(--pr-bg)] shadow-sm'
@@ -78,9 +177,19 @@ export default function Page() {
               }
             </p>
 
+            {/* Error message */}
+            {error && (
+              <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-md">
+                <p className="text-sm text-red-400">{error}</p>
+              </div>
+            )}
+
             {/* Social login buttons */}
             <div className="mt-6 space-y-3">
-              <button className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]">
+              <button 
+                onClick={() => handleSocialLogin('google')}
+                className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]"
+              >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -90,7 +199,10 @@ export default function Page() {
                 Continue with Google
               </button>
 
-              <button className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]">
+              <button 
+                onClick={() => handleSocialLogin('apple')}
+                className="w-full flex items-center justify-center gap-3 rounded-md bg-white/5 border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)]"
+              >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                 </svg>
@@ -103,27 +215,39 @@ export default function Page() {
                 <div className="w-full border-t border-white/10"></div>
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-[color:var(--pr-surface)] px-2 text-zinc-400">Or continue with email</span>
+                <span className="bg-[color:var(--pr-surface)] px-2 text-zinc-400">
+                  Or continue with email
+                </span>
               </div>
             </div>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
                 <div>
-                  <label className="block text-sm mb-1.5 text-zinc-300">Full name</label>
+                  <label className="block text-sm mb-1.5 text-zinc-300">
+                    Full name
+                  </label>
                   <input
                     type="text"
                     placeholder="Andrew Thomas"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required={isSignUp}
                     className="w-full rounded-md bg-black/30 border border-white/10 px-3 py-2.5 text-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pr-ring)] transition-all"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm mb-1.5 text-zinc-300">Email address</label>
+                <label className="block text-sm mb-1.5 text-zinc-300">
+                  Email address
+                </label>
                 <input
                   type="email"
                   placeholder="you@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="w-full rounded-md bg-black/30 border border-white/10 px-3 py-2.5 text-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pr-ring)] transition-all"
                 />
               </div>
@@ -131,18 +255,28 @@ export default function Page() {
               {isSignUp ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-sm mb-1.5 text-zinc-300">Password</label>
+                    <label className="block text-sm mb-1.5 text-zinc-300">
+                      Password
+                    </label>
                     <input
                       type="password"
                       placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                       className="w-full rounded-md bg-black/30 border border-white/10 px-3 py-2.5 text-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pr-ring)] transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-1.5 text-zinc-300">Confirm password</label>
+                    <label className="block text-sm mb-1.5 text-zinc-300">
+                      Confirm password
+                    </label>
                     <input
                       type="password"
                       placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
                       className="w-full rounded-md bg-black/30 border border-white/10 px-3 py-2.5 text-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pr-ring)] transition-all"
                     />
                   </div>
@@ -150,14 +284,22 @@ export default function Page() {
               ) : (
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-sm text-zinc-300">Password</label>
-                    <Link href="#" className="text-xs text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors">
+                    <label className="block text-sm text-zinc-300">
+                      Password
+                    </label>
+                    <Link 
+                      href="#" 
+                      className="text-xs text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors"
+                    >
                       Forgot password?
                     </Link>
                   </div>
                   <input
                     type="password"
                     placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="w-full rounded-md bg-black/30 border border-white/10 px-3 py-2.5 text-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pr-ring)] transition-all"
                   />
                 </div>
@@ -165,23 +307,88 @@ export default function Page() {
 
               {isSignUp && (
                 <div className="flex items-start gap-2.5 text-sm text-zinc-300/80">
-                  <input type="checkbox" className="mt-0.5 accent-[color:var(--pr-primary)]" />
-                  <span>By creating an account, you agree to our <Link href="#" className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors">Terms</Link> and <Link href="#" className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors">Privacy Policy</Link>.</span>
+                  <input 
+                    type="checkbox" 
+                    required 
+                    className="mt-0.5 accent-[color:var(--pr-primary)]" 
+                  />
+                  <span>
+                    By creating an account, you agree to our{' '}
+                    <Link 
+                      href="#" 
+                      className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors"
+                    >
+                      Terms
+                    </Link>{' '}
+                    and{' '}
+                    <Link 
+                      href="#" 
+                      className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors"
+                    >
+                      Privacy Policy
+                    </Link>.
+                  </span>
                 </div>
               )}
 
               <button
                 type="submit"
-                className="w-full rounded-md bg-gradient-to-r from-[color:var(--pr-primary)] to-violet-400 text-[color:var(--pr-bg)] font-medium py-2.5 hover:opacity-95 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)] shadow-lg"
+                disabled={isLoading}
+                className="w-full rounded-md bg-gradient-to-r from-[color:var(--pr-primary)] to-violet-400 text-[color:var(--pr-bg)] font-medium py-2.5 hover:opacity-95 transition-all focus:outline-none focus:ring-2 focus:ring-[color:var(--pr-ring)] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSignUp ? 'Create account' : 'Sign in'}
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle 
+                        className="opacity-25" 
+                        cx="12" 
+                        cy="12" 
+                        r="10" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                      />
+                      <path 
+                        className="opacity-75" 
+                        fill="currentColor" 
+                        d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    {isSignUp ? 'Creating account...' : 'Signing in...'}
+                  </span>
+                ) : (
+                  isSignUp ? 'Create account' : 'Sign in'
+                )}
               </button>
 
               <p className="text-center text-sm text-zinc-300/80">
                 {isSignUp ? (
-                  <>Already have an account? <button type="button" onClick={() => setIsSignUp(false)} className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors">Sign in</button></>
+                  <>
+                    Already have an account?{' '}
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setIsSignUp(false)
+                        setError('')
+                      }}
+                      className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors"
+                    >
+                      Sign in
+                    </button>
+                  </>
                 ) : (
-                  <>Don&apos;t have an account? <button type="button" onClick={() => setIsSignUp(true)} className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors">Sign up</button></>
+                  <>
+                    Don&apos;t have an account?{' '}
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setIsSignUp(true)
+                        setError('')
+                      }}
+                      className="text-[color:var(--pr-primary)] hover:text-[color:var(--pr-ring)] transition-colors"
+                    >
+                      Sign up
+                    </button>
+                  </>
                 )}
               </p>
             </form>
@@ -191,4 +398,3 @@ export default function Page() {
     </main>
   )
 }
-
