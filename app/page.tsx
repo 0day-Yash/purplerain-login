@@ -25,7 +25,7 @@ export default function Page() {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
